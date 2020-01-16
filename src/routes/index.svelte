@@ -7,16 +7,18 @@
 <script context="module">
   import { baseUrl } from '../constants'
   import Message from '../components/Message.svelte'
+  import Compose from '../components/Compose.svelte'
   import { getPublicMessages, getMessages } from '../client_side_api'
+
   let messages = []
+  let user = false
 
   export async function preload(page, { token }) {
+    if (token) user = true
     try {
-      if (token) {
-        messages = await getMessages(token.access_token, this.fetch)
-      } else {
-        messages = await getPublicMessages(this.fetch)
-      }
+      token
+        ? (messages = await getMessages(token.access_token, this.fetch))
+        : (messages = await getPublicMessages(this.fetch))
     } catch (error) {
       console.error(error)
     }
@@ -25,6 +27,9 @@
 
 <div>
   <a href="/login">LOGIN</a>
+  {#if user}
+  <Compose/>
+  {/if}
   {#each messages as message}
   <Message
     content="{message.content}"
