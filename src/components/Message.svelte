@@ -1,13 +1,19 @@
 <script>
-  export let name, time, content, media
+  export let content, tag, replies, name
+  const regex = /<[^>]*>#.*?<[^>]*>/gm
 </script>
-
 <div>
-  <div>
-    <h3>{name}</h3>
-    <span>{time}</span>
-  </div>
-  <p>{content}</p>
+  {#if tag}
+  <p>
+    #{tag.name}
+  </p>
+  {/if}
+  <p>{name}: {@html content.replace(regex, '')}</p>
+  {#each replies as reply}
+  <ul>
+    <li>{reply.account.username}: {@html reply.content.replace(regex, '')}</li>
+  </ul>
+  {/each}
   <!-- {#if media}
   <svelte:component this={media.component} />
   {/if} -->
