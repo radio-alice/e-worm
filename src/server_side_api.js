@@ -34,22 +34,3 @@ export const getTokenWithCode = async code => {
     })
   ).json()
 }
-
-export async function getAccountDetails(accessToken) {
-  return await (
-    await fetch(`${baseUrl}/api/v1/accounts/verify_credentials`, {
-      headers: {
-        Authorization: accessToken
-      }
-    })
-  ).json()
-}
-
-export async function sendMessageText(content, token) {
-  return await fetch(`${baseUrl}/api/v1/status`, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  })
-}
