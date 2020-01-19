@@ -5,6 +5,7 @@
   .stack {
     width: 100%;
     margin: var(--s0);
+    align-items: center;
   }
   footer {
     position: fixed;

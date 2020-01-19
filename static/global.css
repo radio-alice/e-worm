@@ -14,17 +14,20 @@
   --s-3: calc(var(--s-2) / var(--ratio));
   --s-2: calc(var(--s-1) / var(--ratio));
   --s-1: calc(var(--s0) / var(--ratio));
-  --s0: 1rem;
+  --s0: 1.1rem;
   --s1: calc(var(--s0) * var(--ratio));
   --s2: calc(var(--s1) * var(--ratio));
   --s3: calc(var(--s2) * var(--ratio));
   --s4: calc(var(--s3) * var(--ratio));
   --s5: calc(var(--s4) * var(--ratio));
   --text-width: 60ch;
+  --bullet: '↝';
+  font-size: var(--s0);
 }
 * {
   max-width: var(--text-width);
   box-sizing: border-box;
+  margin: 0;
 }
 html,
 body,
@@ -44,19 +47,34 @@ footer {
 .stack {
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 .stack > * + * {
-  margin-top: var(--s1);
+  margin-top: var(--s0);
+}
+.stack:last-child {
+  margin-bottom: var(--s0);
 }
 .row {
   display: flex;
 }
 legend + * {
-  margin-top: 0 !important;
+  margin-top: var(--s-3) !important;
 }
 html,
 body {
   min-height: 100%;
   margin: 0;
+}
+.bullets {
+  padding-left: 0;
+}
+.bullets > * {
+  list-style: none;
+}
+.bullets > *::before {
+  content: var(--bullet, '→') '\0020';
+}
+textarea {
+  font-size: var(--s-1);
+  padding: var(--s-4) var(--s-3);
 }

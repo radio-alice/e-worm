@@ -3,7 +3,7 @@
   import { sendMessage } from '../client_side_api'
   import { stores } from '@sapper/app'
   const { session } = stores()
-  const tagOptions = ['talkin shit', 'makin plans', 'apolitical']
+  const tagOptions = ['talkin_shit', 'makin_plans', 'apolitical']
 
   export let replyID = false
   export let tag = 'apolitical'
@@ -21,9 +21,14 @@
 <style>
   .stack {
     width: 100%;
+    margin-bottom: 0;
   }
   textarea {
     flex: 1;
+    border-color: var(--dark-grey);
+  }
+  textarea.reply {
+    border-width: var(--s-5) 0 0 0;
   }
   .row {
     align-items: stretch;
@@ -49,8 +54,10 @@
   {/if}
   <div class="row">
     <textarea
+      class="{replyID ? 'reply' : ''}"
       bind:value="{content}"
-      placeholder="give me your sweet thoughts"
+      placeholder="give us your sweet thoughts"
+      rows="1"
     ></textarea>
     <input type="submit" disabled="{!(content)}" value="send it" />
   </div>
