@@ -18,20 +18,40 @@
     content = ''
   }
 </script>
-
-<form on:submit="{handleAddPost}">
-  <textarea
-    bind:value="{content}"
-    placeholder="give me your sweet thoughts"
-  ></textarea>
-  {#if !replyID} {#each tagOptions as tagOption}
-  <label
-    ><input
-      type="radio"
-      bind:group="{tag}"
-      value="{tagOption}"
-    />{tagOption}</label
-  >
-  {/each} {/if}
-  <input type="submit" disabled="{!(content)}" value="send it" />
+<style>
+  .stack {
+    width: 100%;
+  }
+  textarea {
+    flex: 1;
+  }
+  .row {
+    align-items: stretch;
+    width: 100%;
+  }
+  label {
+    margin-right: var(--s1);
+  }
+</style>
+<form on:submit="{handleAddPost}" class="stack">
+  {#if !replyID}
+  <div class="row">
+    {#each tagOptions as tagOption}
+    <label
+      ><input
+        type="radio"
+        bind:group="{tag}"
+        value="{tagOption}"
+      />{tagOption}</label
+    >
+    {/each}
+  </div>
+  {/if}
+  <div class="row">
+    <textarea
+      bind:value="{content}"
+      placeholder="give me your sweet thoughts"
+    ></textarea>
+    <input type="submit" disabled="{!(content)}" value="send it" />
+  </div>
 </form>
