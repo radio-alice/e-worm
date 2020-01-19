@@ -22,7 +22,7 @@ export const getReplies = async (messageId, fetch) =>
 
 export const sendMessage = async (content, tag, replyID, accessToken) => {
   const body = new FormData()
-  if (tag.length > 0) content = `${content} #${tag.replace(' ', '_')}`
+  if (tag) content = `${content} #${tag.replace(' ', '_')}`
   body.append('status', content)
   body.append('visibility', 'public')
   if (replyID) body.append('in_reply_to_id', replyID)
