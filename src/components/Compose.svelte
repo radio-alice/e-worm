@@ -28,14 +28,17 @@
     border-color: var(--dark-grey);
   }
   textarea.reply {
-    border-width: var(--s-5) 0 0 0;
+    border-width: var(--s-thin) 0 0 0;
   }
   .row {
     align-items: stretch;
     width: 100%;
   }
   label {
-    margin-right: var(--s1);
+    margin-right: var(--s2);
+  }
+  input[type='radio'] {
+    margin-right: var(--s-1);
   }
 </style>
 <form on:submit="{handleAddPost}" class="stack">
