@@ -56,8 +56,8 @@
     <textarea
       class="{replyID ? 'reply' : ''}"
       bind:value="{content}"
-      placeholder="give us your sweet thoughts"
-      rows="1"
+      placeholder="give us your sweet thoughts..."
+      rows="{replyID ? '1' : '2'}"
     ></textarea>
     <input type="submit" disabled="{!(content)}" value="send it" />
   </div>
