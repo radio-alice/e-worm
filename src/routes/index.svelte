@@ -55,7 +55,7 @@
       name="{message.account.username}"
     >
       {#if user}
-      <Compose replyID="{message.id}" tag="{message.tags[0]}"></Compose>
+      <Compose replyID="{message.id}" tag="{message.tags[0].name}"></Compose>
       {/if}
     </Message>
     {/if} {:else}

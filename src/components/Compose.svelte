@@ -14,7 +14,7 @@
   })
 
   const handleAddPost = async () => {
-    console.log('here', content)
+    console.log(content)
     if (content) await sendMessage(content, tag, replyID, access_token)
     content = ''
   }
@@ -53,10 +53,9 @@
     margin-right: var(--s-1);
   }
   input[type='submit'] {
-    font-family: 'Barlowfold';
+    font-family: 'CSTM';
     flex: 1;
     background-color: var(--green);
-    box-shadow: var(--s-4) var(--s-4) var(--darkblue);
   }
   .main input[type='submit'] {
     font-size: var(--s1);
