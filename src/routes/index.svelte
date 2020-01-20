@@ -6,6 +6,7 @@
     width: 100%;
     margin: var(--s0);
     align-items: center;
+    margin-bottom: calc(var(--s5) + 0.5vw);
   }
   footer {
     position: fixed;
@@ -13,7 +14,11 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-bottom: var(--s0);
+    padding: var(--s-1) 0;
+    background-color: var(--pink);
+  }
+  footer a {
+    font-size: var(--s1);
   }
 </style>
 <script context="module">
@@ -62,6 +67,6 @@
   {#if user}
   <Compose></Compose>
   {:else}
-  <a href="/login">LOGIN</a>
+  <a href="/login">login</a>
   {/if}
 </footer>

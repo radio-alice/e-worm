@@ -14,6 +14,7 @@
   })
 
   const handleAddPost = async () => {
+    console.log('here', content)
     if (content) await sendMessage(content, tag, replyID, access_token)
     content = ''
   }
@@ -24,11 +25,21 @@
     margin-bottom: 0;
   }
   textarea {
-    flex: 1;
-    border-color: var(--dark-grey);
+    flex: 5;
+    font-size: var(--s0);
+    border: none;
   }
-  textarea.reply {
-    border-width: var(--s-thin) 0 0 0;
+  .reply {
+    height: var(--s1);
+    border-top: var(--s-5) solid var(--darkgrey);
+  }
+  .reply textarea {
+    font-family: 'Space Mono';
+    font-size: var(--s-1);
+  }
+  .reply input[type='submit'] {
+    font-size: var(--s0);
+    padding: 0;
   }
   .row {
     align-items: stretch;
@@ -36,9 +47,19 @@
   }
   label {
     margin-right: var(--s2);
+    font-family: 'rumeur', monospace;
   }
   input[type='radio'] {
     margin-right: var(--s-1);
+  }
+  input[type='submit'] {
+    font-family: 'Barlowfold';
+    flex: 1;
+    background-color: var(--green);
+    box-shadow: var(--s-4) var(--s-4) var(--darkblue);
+  }
+  .main input[type='submit'] {
+    font-size: var(--s1);
   }
 </style>
 <form on:submit="{handleAddPost}" class="stack">
@@ -55,13 +76,12 @@
     {/each}
   </div>
   {/if}
-  <div class="row">
+  <div class="row {replyID ? 'reply' : 'main'}">
     <textarea
-      class="{replyID ? 'reply' : ''}"
       bind:value="{content}"
       placeholder="give us your sweet thoughts..."
       rows="{replyID ? '1' : '2'}"
     ></textarea>
-    <input type="submit" disabled="{!(content)}" value="send it" />
+    <input type="submit" disabled="{!(content)}" value="⇈" />
   </div>
 </form>
