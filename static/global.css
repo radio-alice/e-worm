@@ -1,7 +1,20 @@
+@font-face {
+  font-family: 'CSTM';
+  src: url('/CSTM.otf');
+}
+@font-face {
+  font-family: 'rumeur';
+  src: url('/rumeur.otf');
+}
+@font-face {
+  font-family: 'Space Mono';
+  src: url('/SpaceMono-Italic.ttf');
+}
 :root {
   --lightgrey: #e0e2e7;
   --grey: #babeca;
   --darkgrey: #21212c;
+  --bpink: #da0fec;
   --yellow: #f5efb8;
   --green: #c4eebe;
   --blue: #c3e5f5;
@@ -26,9 +39,13 @@
   font-size: var(--s0);
 }
 * {
+  font-family: 'Space Mono', monospace;
+  color: var(--darkgrey);
+  border: none;
   max-width: var(--text-width);
   box-sizing: border-box;
   margin: 0;
+  padding: 0;
 }
 html,
 body,
@@ -52,9 +69,6 @@ footer {
 .stack > * + * {
   margin-top: var(--s0);
 }
-.stack:last-child {
-  margin-bottom: var(--s0);
-}
 .row {
   display: flex;
 }
@@ -65,6 +79,7 @@ html,
 body {
   min-height: 100%;
   margin: 0;
+  background-color: var(--grey);
 }
 .bullets {
   padding-left: 0;
@@ -76,6 +91,10 @@ body {
   content: var(--bullet, '→') '\0020';
 }
 textarea {
-  font-size: var(--s-1);
-  padding: var(--s-4) var(--s-3);
+  padding: var(--s-4) 2ch;
+}
+a,
+a:visited {
+  color: var(--bpink);
+  font-family: 'CSTM';
 }
