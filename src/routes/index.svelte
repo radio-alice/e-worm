@@ -14,8 +14,9 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    padding: var(--s-1) 0;
-    background-color: var(--pink);
+    padding: 0 0 var(--s-1) 0;
+    background-color: var(--peri);
+    box-shadow: 0 0 var(--s0) var(--s0) var(--peri);
   }
   footer a {
     font-size: var(--s1);

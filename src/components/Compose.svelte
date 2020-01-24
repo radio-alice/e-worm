@@ -28,13 +28,14 @@
     flex: 5;
     font-size: var(--s0);
     border: none;
+    text-shadow: 0 0 var(--s-5) var(--peri);
   }
   .reply {
     height: var(--s1);
-    border-top: var(--s-5) solid var(--darkgrey);
+    box-shadow: 0 var(--s-thin) var(--s-1) var(--gold);
   }
   .reply textarea {
-    font-family: 'Space Mono';
+    font-family: 'Bagnard';
     font-size: var(--s-1);
   }
   .reply input[type='submit'] {
@@ -47,7 +48,8 @@
   }
   label {
     margin-right: var(--s2);
-    font-family: 'rumeur', monospace;
+    font-family: 'Autopia Bold', monospace;
+    text-shadow: 0 0 var(--s-4) var(--gold);
   }
   input[type='radio'] {
     margin-right: var(--s-1);
@@ -55,7 +57,7 @@
   input[type='submit'] {
     font-family: 'CSTM';
     flex: 1;
-    background-color: var(--green);
+    background-color: var(--gold);
   }
   .main input[type='submit'] {
     font-size: var(--s1);

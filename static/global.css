@@ -3,23 +3,25 @@
   src: url('/CSTM.otf');
 }
 @font-face {
-  font-family: 'rumeur';
-  src: url('/rumeur.otf');
+  font-family: 'Autopia Bold';
+  src: url('/Autopia-Bold.woff');
 }
 @font-face {
-  font-family: 'Space Mono';
-  src: url('/SpaceMono-Italic.ttf');
+  font-family: 'Bagnard';
+  src: url('/BagnardSans.otf');
+}
+@font-face {
+  font-family: 'herbier';
+  src: url('/herbier.otf');
 }
 :root {
-  --lightgrey: #e0e2e7;
-  --grey: #babeca;
-  --darkgrey: #21212c;
-  --bpink: #da0fec;
-  --yellow: #f5efb8;
-  --green: #c4eebe;
-  --blue: #c3e5f5;
-  --darkblue: #74a3fa;
-  --pink: #ffbfd2;
+  --darkgreen: rgb(0, 78, 48);
+  --darkblue: rgb(0, 0, 160);
+  --darkpurple: rgb(93, 0, 146);
+  --pink: rgb(255, 121, 165);
+  --gold: rgb(255, 219, 133);
+  --peri: rgba(174, 177, 239, 1);
+  --cream: rgb(251, 242, 235);
 
   --ratio: 1.5;
   --s-thin: calc(var(--s-5) / (var(--ratio) * 3));
@@ -39,8 +41,8 @@
   font-size: var(--s0);
 }
 * {
-  font-family: 'Space Mono', monospace;
-  color: var(--darkgrey);
+  font-family: 'Bagnard', monospace;
+  color: var(--darkblue);
   border: none;
   max-width: var(--text-width);
   box-sizing: border-box;
@@ -67,7 +69,7 @@ footer {
   flex-direction: column;
 }
 .stack > * + * {
-  margin-top: var(--s0);
+  margin-top: var(--s-1);
 }
 .row {
   display: flex;
@@ -79,7 +81,7 @@ html,
 body {
   min-height: 100%;
   margin: 0;
-  background-color: var(--grey);
+  background-color: var(--cream);
 }
 .bullets {
   padding-left: 0;
@@ -91,10 +93,13 @@ body {
   content: var(--bullet, '→') '\0020';
 }
 textarea {
-  padding: var(--s-4) 2ch;
+  padding: var(--s-3) 1ch;
 }
 a,
 a:visited {
-  color: var(--bpink);
+  text-shadow: 0 0 var(--s-thin) var(--pink);
   font-family: 'CSTM';
+}
+.herbier {
+  font-family: 'herbier';
 }
