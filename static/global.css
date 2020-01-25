@@ -97,7 +97,7 @@ textarea {
 }
 a,
 a:visited {
-  text-shadow: 0 0 var(--s-thin) var(--pink);
+  text-shadow: 0 0 var(--s-5) var(--pink);
   font-family: 'CSTM';
 }
 .herbier {
