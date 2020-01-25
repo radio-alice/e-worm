@@ -3,8 +3,20 @@
   const regex = /<[^>]*>#.*?<[^>]*>/gm //match hashtag links only
   let leaf = Math.ceil(Math.random() * 10)
   if (leaf === 10) leaf = 'q'
+
+  const focus = ({ target }) =>
+    target.scrollIntoView({ behavior: 'smooth', block: 'center' })
 </script>
 <style>
+  .message {
+    padding: var(--s0);
+    width: 100%;
+    max-width: var(--text-width);
+  }
+  .message:focus {
+    box-shadow: 0 0 var(--s3) var(--pink);
+    outline: none;
+  }
   .tag {
     font-family: 'Autopia Bold', monospace;
     font-size: var(--s1);
@@ -16,11 +28,6 @@
     flex: 1;
     position: relative;
     bottom: calc(var(--s1) * 0.5);
-  }
-  .message {
-    padding: var(--s0);
-    width: 100%;
-    max-width: var(--text-width);
   }
   .herbier {
     position: relative;
@@ -34,7 +41,7 @@
     margin-left: var(--s-1);
   }
 </style>
-<div class="message stack">
+<div class="message stack" tabindex="0" on:focus="{focus}">
   <div class="row">
     <span class="herbier">{leaf}</span>
     {#if tag}
