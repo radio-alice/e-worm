@@ -2,8 +2,8 @@ const fetch = require('node-fetch')
 const FormData = require('form-data')
 
 require('dotenv').config()
-const { clientSecret } = process.env
-import { clientId, baseUrl, redirectUri } from './constants.js'
+const { clientSecret, clientId, redirectUri } = process.env
+import { baseUrl } from './constants'
 
 const getClientToken = async () =>
   await (

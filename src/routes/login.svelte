@@ -1,10 +1,6 @@
 <script context="module">
-  import { baseUrl, redirectUri, clientId } from '../constants'
-
   export async function preload() {
-    return this.redirect(
-      302,
-      `${baseUrl}/oauth/authorize?client_id=${clientId}&scope=read+write+follow+push&redirect_uri=${redirectUri}&response_type=code`
-    )
+    const loginUrl = await (await this.fetch('/api/login')).text()
+    return this.redirect(302, loginUrl)
   }
 </script>
