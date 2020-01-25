@@ -14,10 +14,12 @@
   })
 
   const handleAddPost = async () => {
-    console.log(content)
     if (content) await sendMessage(content, tag, replyID, access_token)
     content = ''
+    location.reload()
   }
+
+  const isCmdEnter = e => e.keyCode == 13 && e.metaKey
 </script>
 <style>
   .stack {
@@ -29,6 +31,9 @@
     font-size: var(--s0);
     border: none;
     text-shadow: 0 0 var(--s-5) var(--peri);
+  }
+  textarea:focus {
+    outline: var(--gold);
   }
   .reply {
     height: var(--s1);
@@ -63,7 +68,11 @@
     font-size: var(--s1);
   }
 </style>
-<form on:submit="{handleAddPost}" class="stack">
+<form
+  on:submit|preventDefault="{handleAddPost}"
+  class="stack"
+  on:keydown="{e => isCmdEnter(e) ? handleAddPost() : null}"
+>
   {#if !replyID}
   <div class="row">
     {#each tagOptions as tagOption}
