@@ -34,3 +34,17 @@ export const getTokenWithCode = async code => {
     })
   ).json()
 }
+
+export const logout = async token => {
+  const body = new FormData()
+  body.append('client_id', clientId)
+  body.append('client_secret', clientSecret)
+  body.append('token', token)
+
+  return await (
+    await fetch(`${baseUrl}/oauth/revoke`, {
+      method: 'POST',
+      body
+    })
+  ).json()
+}

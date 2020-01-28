@@ -14,12 +14,17 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    padding: 0 0 var(--s-1) 0;
+    padding: 0 var(--s-1) var(--s-1) var(--s-1);
     background-color: var(--peri);
     box-shadow: 0 0 var(--s0) var(--s0) var(--peri);
   }
   footer a {
     font-size: var(--s1);
+  }
+  #logout {
+    position: absolute;
+    top: var(--s0);
+    right: var(--s0);
   }
 </style>
 <script context="module">
@@ -71,3 +76,6 @@
   <a href="/login">login</a>
   {/if}
 </footer>
+{#if user}
+<a id="logout" href="/logout">logout</a>
+{/if}
