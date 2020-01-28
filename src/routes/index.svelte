@@ -26,11 +26,26 @@
     top: var(--s0);
     right: var(--s0);
   }
+  #alt {
+    position: absolute;
+    right: var(--s0);
+  }
 </style>
-<script context="module">
-  import { baseUrl } from '../constants'
+<script>
+  import { onMount } from 'svelte'
+  import Shortcuts from '../components/Shortcuts.svelte'
   import Message from '../components/Message.svelte'
   import Compose from '../components/Compose.svelte'
+
+  let shortcutsActive = false
+  const isAltKey = e => e.keyCode == 18
+  onMount(() => {
+    window.onkeydown = e => (isAltKey(e) ? (shortcutsActive = true) : null)
+    window.onkeyup = e => (isAltKey(e) ? (shortcutsActive = false) : null)
+  })
+</script>
+<script context="module">
+  import { baseUrl } from '../constants'
   import { getPublicMessages, getReplies } from '../client_side_api'
   let messages = []
   let user = false
@@ -75,7 +90,8 @@
   {:else}
   <a href="/login">login</a>
   {/if}
+  <p id="alt">alt = view shortcuts</p>
 </footer>
 {#if user}
 <a id="logout" href="/logout">logout</a>
-{/if}
+{/if} <Shortcuts visible="{shortcutsActive}"></Shortcuts>

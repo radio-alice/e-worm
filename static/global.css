@@ -19,8 +19,10 @@
   --darkblue: rgb(0, 0, 160);
   --darkpurple: rgb(93, 0, 146);
   --pink: rgb(255, 121, 165);
+  --transpink: rgba(255, 121, 165, 0.5);
   --gold: rgb(255, 219, 133);
   --peri: rgba(174, 177, 239, 1);
+  --transperi: rgba(174, 177, 239, 0.5);
   --cream: rgb(251, 242, 235);
 
   --ratio: 1.5;
