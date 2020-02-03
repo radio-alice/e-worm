@@ -29,6 +29,6 @@
   }
 </style>
 <div class="stack" class:visible>
-  <p><span class="key">Tab</span> - navigate through feed</p>
+  <p><span class="key">Tab / Shift + Tab</span> - navigate through feed</p>
   <p><span class="key">Cmd + ⮐</span> - send finished post / reply</p>
 </div>
