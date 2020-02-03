@@ -1,17 +1,14 @@
 <script>
-  import { baseUrl } from '../constants'
+  import { baseUrl, tagOptions } from '../constants'
   import { sendMessage } from '../client_side_api'
   import { stores } from '@sapper/app'
   const { session } = stores()
-  const tagOptions = ['talkin_shit', 'makin_plans', 'apolitical']
 
   export let replyID = false
-  export let tag = 'apolitical'
+  export let tag = tagOptions[0]
   let access_token
   let content = ''
-  session.subscribe(({ token }) => {
-    access_token = token.access_token
-  })
+  session.subscribe(({ token }) => (access_token = token.access_token))
 
   const handleAddPost = async () => {
     if (content) await sendMessage(content, tag, replyID, access_token)
