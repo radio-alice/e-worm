@@ -7,4 +7,4 @@
   import { onMount } from 'svelte'
   onMount(() => (location.href = '/'))
 </script>
-<p>logging out...</p>
+<p>beeep boop good bye my love...</p>
