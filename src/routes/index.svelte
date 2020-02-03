@@ -26,7 +26,7 @@
     top: var(--s0);
     right: var(--s0);
   }
-  #alt {
+  #cmd {
     position: absolute;
     right: var(--s0);
   }
@@ -38,10 +38,14 @@
   import Compose from '../components/Compose.svelte'
 
   let shortcutsActive = false
-  const isAltKey = e => e.keyCode == 18
+  const isCmdKey = e => e.keyCode === 224
   onMount(() => {
-    window.onkeydown = e => (isAltKey(e) ? (shortcutsActive = true) : null)
-    window.onkeyup = e => (isAltKey(e) ? (shortcutsActive = false) : null)
+    window.onkeydown = e => {
+      if (isCmdKey(e)) shortcutsActive = true
+    }
+    window.onkeyup = e => {
+      if (isCmdKey(e)) shortcutsActive = false
+    }
   })
 </script>
 <script context="module">
@@ -90,8 +94,9 @@
   {:else}
   <a href="/login">login</a>
   {/if}
-  <p id="alt">alt = view shortcuts</p>
+  <p id="cmd">cmd = view shortcuts</p>
 </footer>
 {#if user}
 <a id="logout" href="/logout">logout</a>
-{/if} <Shortcuts visible="{shortcutsActive}"></Shortcuts>
+{/if}
+<Shortcuts visible="{shortcutsActive}"></Shortcuts>
