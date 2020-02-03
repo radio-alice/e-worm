@@ -34,3 +34,20 @@ export const sendMessage = async (content, tag, replyID, accessToken) => {
     }
   })
 }
+
+export const changePassword = async (password, newPassword, accessToken) => {
+  const body = new FormData()
+  body.append('password', password)
+  body.append('new_password', newPassword)
+  body.append('new_password_confirmation', newPassword)
+
+  return await (
+    await fetch(`${baseUrl}/api/pleroma/change_password`, {
+      method: 'POST',
+      body,
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    })
+  ).json()
+}
