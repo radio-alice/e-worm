@@ -2,7 +2,7 @@
   <title>e-worm club</title>
 </svelte:head>
 <style>
-  .stack {
+  .main {
     width: 100%;
     margin: var(--s0);
     align-items: center;
@@ -21,8 +21,9 @@
   footer a {
     font-size: var(--s1);
   }
-  #logout {
+  .housekeeping {
     position: absolute;
+    align-items: flex-end;
     top: var(--s0);
     right: var(--s0);
   }
@@ -70,7 +71,7 @@
   }
 </script>
 <div class="centerh">
-  <main class="stack">
+  <main class="stack main">
     {#each messages as message (message.id)} {#if (message.in_reply_to_id ===
     null)}
     <Message
@@ -97,6 +98,9 @@
   <p id="cmd">cmd = view shortcuts</p>
 </footer>
 {#if user}
-<a id="logout" href="/logout">logout</a>
+<div class="housekeeping stack">
+  <a href="/logout">logout</a>
+  <a href="/change-pw">change password</a>
+</div>
 {/if}
 <Shortcuts visible="{shortcutsActive}"></Shortcuts>
