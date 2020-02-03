@@ -37,7 +37,6 @@
     box-shadow: 0 var(--s-thin) var(--s-1) var(--gold);
   }
   .reply textarea {
-    font-family: 'Bagnard';
     font-size: var(--s-1);
   }
   .reply input[type='submit'] {
