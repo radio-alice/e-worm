@@ -1,5 +1,5 @@
 <script>
-  import { baseUrl, tagOptions } from '../constants'
+  import { tagOptions } from '../constants'
   import { sendMessage } from '../client_side_api'
   import { stores } from '@sapper/app'
   const { session } = stores()
