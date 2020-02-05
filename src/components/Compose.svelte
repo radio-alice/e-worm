@@ -28,6 +28,7 @@
     font-size: var(--s0);
     border: none;
     text-shadow: 0 0 var(--s-5) var(--peri);
+    max-width: 80%;
   }
   textarea:focus {
     outline: var(--gold);
@@ -47,18 +48,40 @@
     align-items: stretch;
     width: 100%;
   }
-  label {
-    margin-right: var(--s2);
-    font-family: 'Autopia Bold', monospace;
+  option,
+  select {
+    font-family: 'Autopia Bold', 'Bagnard';
     text-shadow: 0 0 var(--s-4) var(--gold);
+    font-size: var(--s-1);
+    text-align: center;
+    background-color: var(--transparent);
   }
-  input[type='radio'] {
-    margin-right: var(--s-1);
+  select {
+    display: block;
+    width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    flex: 12;
+  }
+  .select-wrapper {
+    background-color: var(--transcream);
+    border-bottom: var(--s-5) solid var(--peri);
+  }
+  .select-wrapper::after {
+    content: '▼';
+    flex: 0;
+    position: relative;
+    right: var(--s-1);
+    pointer-events: none;
+    align-items: center;
   }
   input[type='submit'] {
     font-family: 'CSTM';
     flex: 1;
     background-color: var(--gold);
+  }
+  .main {
+    margin-top: 0;
   }
   .main input[type='submit'] {
     font-size: var(--s1);
@@ -70,16 +93,12 @@
   on:keydown="{e => isCmdEnter(e) ? handleAddPost() : null}"
 >
   {#if !replyID}
-  <div class="row">
-    {#each tagOptions as tagOption}
-    <label
-      ><input
-        type="radio"
-        bind:group="{tag}"
-        value="{tagOption}"
-      />{tagOption}</label
-    >
-    {/each}
+  <div class="select-wrapper row">
+    <select bind:value="{tag}">
+      {#each tagOptions as tagOption}
+      <option value="{tagOption}">{tagOption}</option>
+      {/each}
+    </select>
   </div>
   {/if}
   <div class="row {replyID ? 'reply' : 'main'}">

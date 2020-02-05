@@ -24,6 +24,8 @@
   --peri: rgba(174, 177, 239, 1);
   --transperi: rgba(174, 177, 239, 0.5);
   --cream: rgb(251, 242, 235);
+  --transcream: rgba(251, 242, 235, 0.7);
+  --transparent: rgba(0, 0, 0, 0);
 
   --ratio: 1.5;
   --s-thin: calc(var(--s-5) / (var(--ratio) * 3));
@@ -57,6 +59,7 @@ div,
 header,
 nav,
 main,
+select,
 footer {
   max-width: none;
 }

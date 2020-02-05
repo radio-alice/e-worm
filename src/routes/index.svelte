@@ -9,27 +9,48 @@
     margin-bottom: calc(var(--s5) + 0.5vw);
   }
   footer {
+    flex-direction: row;
     position: fixed;
     bottom: 0;
     width: 100%;
-    display: flex;
-    justify-content: center;
-    padding: 0 var(--s-1) var(--s-1) var(--s-1);
+    padding: 0 calc(5vw - var(--s-1)) var(--s-2) calc(5vw - var(--s-1));
     background-color: var(--peri);
     box-shadow: 0 0 var(--s0) var(--s0) var(--peri);
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+    font-size: calc(var(--s-1) + 0.5vw);
   }
   footer a {
-    font-size: var(--s1);
+    font-size: calc(var(--s0) + 0.5vw);
   }
-  .housekeeping {
-    position: absolute;
-    align-items: flex-end;
-    top: var(--s0);
-    right: var(--s0);
+  footer * {
+    max-width: 100%;
+  }
+  .misc > * {
+    margin-top: var(--s-1);
+  }
+  .misc > * + * {
+    margin-left: calc(var(--s1) + 2vw);
+  }
+  .misc {
+    flex-basis: 15rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    max-width: max-content;
+  }
+  .compose {
+    flex-grow: 999;
+    flex-basis: 0;
+    display: flex;
+    justify-content: center;
   }
   #cmd {
-    position: absolute;
-    right: var(--s0);
+    display: none;
   }
 </style>
 <script>
@@ -47,13 +68,15 @@
     window.onkeyup = e => {
       if (isCmdKey(e)) shortcutsActive = false
     }
+    if (window.innerWidth > 600)
+      document.querySelector('#cmd').style.display = 'inline'
   })
 </script>
 <script context="module">
   import { baseUrl } from '../constants'
   import { getPublicMessages, getReplies } from '../client_side_api'
   let messages = []
-  let user = false
+  let user = true
 
   export async function preload(page, { token }) {
     if (token) user = true
@@ -89,18 +112,20 @@
     {/each}
   </main>
 </div>
-<footer>
-  {#if user}
-  <Compose></Compose>
-  {:else}
-  <a href="/login">login</a>
-  {/if}
-  <p id="cmd">cmd = view shortcuts</p>
+<footer class="flexi">
+  <div class="compose">
+    {#if user}
+    <Compose></Compose>
+    {:else}
+    <a href="/login">login</a>
+    {/if}
+  </div>
+  <div class="misc">
+    {#if user}
+    <a href="/logout">logout</a>
+    <a href="/change-pw">change password</a>
+    {/if}
+    <p id="cmd">cmd = view shortcuts</p>
+  </div>
 </footer>
-{#if user}
-<div class="housekeeping stack">
-  <a href="/logout">logout</a>
-  <a href="/change-pw">change password</a>
-</div>
-{/if}
 <Shortcuts visible="{shortcutsActive}"></Shortcuts>
