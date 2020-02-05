@@ -76,7 +76,7 @@
   import { baseUrl } from '../constants'
   import { getPublicMessages, getReplies } from '../client_side_api'
   let messages = []
-  let user = true
+  let user = false
 
   export async function preload(page, { token }) {
     if (token) user = true
