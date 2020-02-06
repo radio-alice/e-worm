@@ -53,6 +53,7 @@
     display: none;
   }
 </style>
+<svelte:window on:keydown="{handleKeyDown}" on:keyup="{handleKeyUp}" />
 <script>
   import { onMount } from 'svelte'
   import Shortcuts from '../components/Shortcuts.svelte'
@@ -63,13 +64,13 @@
   let shortcutsActive = false
 
   const isCmdKey = e => e.keyCode === 224
+  const handleKeyDown = e => {
+    if (isCmdKey(e)) shortcutsActive = true
+  }
+  const handleKeyUp = e => {
+    if (isCmdKey(e)) shortcutsActive = false
+  }
   onMount(() => {
-    window.onkeydown = e => {
-      if (isCmdKey(e)) shortcutsActive = true
-    }
-    window.onkeyup = e => {
-      if (isCmdKey(e)) shortcutsActive = false
-    }
     if (window.innerWidth > 600)
       document.querySelector('#cmd').style.display = 'inline'
   })
