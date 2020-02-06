@@ -58,8 +58,10 @@
   import Shortcuts from '../components/Shortcuts.svelte'
   import Message from '../components/Message.svelte'
   import Compose from '../components/Compose.svelte'
-
+  export let user
+  export let messages
   let shortcutsActive = false
+
   const isCmdKey = e => e.keyCode === 224
   onMount(() => {
     window.onkeydown = e => {
@@ -75,22 +77,17 @@
 <script context="module">
   import { baseUrl } from '../constants'
   import { getPublicMessages, getReplies } from '../client_side_api'
-  let messages = []
-  let user = false
 
   export async function preload(page, { token }) {
-    if (token) user = true
-    try {
-      messages = await getPublicMessages(this.fetch)
-      messages = await Promise.all(
-        messages.map(async message => ({
-          ...message,
-          replies: await getReplies(message.id, this.fetch)
-        }))
-      )
-    } catch (error) {
-      console.error(error)
-    }
+    const user = token ? true : false
+    const plainMessages = await getPublicMessages(this.fetch)
+    const messages = await Promise.all(
+      plainMessages.map(async message => ({
+        ...message,
+        replies: await getReplies(message.id, this.fetch)
+      }))
+    )
+    return { messages, user }
   }
 </script>
 <div class="centerh">
