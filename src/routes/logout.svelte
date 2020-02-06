@@ -4,7 +4,8 @@
   }
 </script>
 <script>
+  import { goto } from '@sapper/app'
   import { onMount } from 'svelte'
-  onMount(() => (location.href = '/'))
+  onMount(() => goto('/'))
 </script>
 <p>beeep boop good bye my love...</p>

@@ -1,15 +1,15 @@
 <script>
   import { changePassword } from '../client_side_api'
-  import { stores } from '@sapper/app'
+  import { stores, goto } from '@sapper/app'
+
   const { session } = stores()
   let oldPW, newPW, accessToken
-
   session.subscribe(({ token }) => (accessToken = token.access_token))
 
   const handleSubmit = async () => {
     if (!accessToken) {
       window.alert('you were never logged in')
-      location.href = '/login'
+      goto('/login')
     }
     const response = await changePassword(oldPW, newPW, accessToken)
     if (response.error) {
@@ -17,7 +17,7 @@
       return
     }
 
-    location.href = '/logout'
+    goto('/logout')
   }
 </script>
 <style>
