@@ -80,8 +80,7 @@
 </script>
 <script context="module">
   import { baseUrl } from '../constants'
-  import { getInitialMessages } from './_messages'
-  import { getPublicMessages, getReplies } from '../client_side_api'
+  import { getInitialMessages } from '../client_side_api'
 
   export async function preload(page, { token }) {
     const user = token ? true : false
