@@ -59,8 +59,10 @@
   import Shortcuts from '../components/Shortcuts.svelte'
   import Message from '../components/Message.svelte'
   import Compose from '../components/Compose.svelte'
+  import { messages } from './_messages'
+
   export let user
-  export let messages
+  export let initialMessages
   let shortcutsActive = false
 
   const isCmdKey = e => e.keyCode === 224
@@ -73,6 +75,7 @@
   onMount(() => {
     if (window.innerWidth > 600)
       document.querySelector('#cmd').style.display = 'inline'
+    messages.seed(initialMessages)
   })
 </script>
 <script context="module">
@@ -82,19 +85,22 @@
   export async function preload(page, { token }) {
     const user = token ? true : false
     const plainMessages = await getPublicMessages(this.fetch)
-    const messages = await Promise.all(
+    const messagesWithReplies = await Promise.all(
       plainMessages.map(async message => ({
         ...message,
         replies: await getReplies(message.id, this.fetch)
       }))
     )
-    return { messages, user }
+    const initialMessages = messagesWithReplies.filter(
+      message => message.in_reply_to_id === null
+    )
+
+    return { user, initialMessages }
   }
 </script>
 <div class="centerh">
   <main class="stack main">
-    {#each messages as message (message.id)} {#if (message.in_reply_to_id ===
-    null)}
+    {#each $messages as message (message.id)}
     <Message
       content="{message.content}"
       tag="{message.tags[0]}"
@@ -105,7 +111,7 @@
       <Compose replyID="{message.id}" tag="{message.tags[0].name}"></Compose>
       {/if}
     </Message>
-    {/if} {:else}
+    {:else}
     <p>loading #content...</p>
     {/each}
   </main>
