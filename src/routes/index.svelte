@@ -80,33 +80,19 @@
 </script>
 <script context="module">
   import { baseUrl } from '../constants'
+  import { getInitialMessages } from './_messages'
   import { getPublicMessages, getReplies } from '../client_side_api'
 
   export async function preload(page, { token }) {
     const user = token ? true : false
-    const plainMessages = await getPublicMessages(this.fetch)
-    const messagesWithReplies = await Promise.all(
-      plainMessages.map(async message => ({
-        ...message,
-        replies: await getReplies(message.id, this.fetch)
-      }))
-    )
-    const initialMessages = messagesWithReplies.filter(
-      message => message.in_reply_to_id === null
-    )
-
+    const initialMessages = await getInitialMessages(this.fetch)
     return { user, initialMessages }
   }
 </script>
 <div class="centerh">
   <main class="stack main">
     {#each $messages as message (message.id)}
-    <Message
-      content="{message.content}"
-      tag="{message.tags[0]}"
-      replies="{message.replies}"
-      name="{message.account.username}"
-    >
+    <Message {...message}>
       {#if user}
       <Compose replyID="{message.id}" tag="{message.tags[0].name}"></Compose>
       {/if}

@@ -1,11 +1,22 @@
 <script>
+  import { onMount } from 'svelte'
+  import { baseUrl } from '../constants'
   export let content, tag, replies, name
-  const regex = /<[^>]*>#.*?<[^>]*>/gm //match hashtag links only
+
   let leaf = Math.ceil(Math.random() * 10)
   if (leaf === 10) leaf = 'q'
 
   const focus = ({ target }) =>
     target.scrollIntoView({ behavior: 'smooth', block: 'center' })
+
+  onMount(() => {
+    // remove links back to original frontend
+    const links = document.querySelectorAll('a')
+    links.forEach(link => {
+      if (link.attributes.href.value.startsWith(baseUrl))
+        link.removeAttribute('href')
+    })
+  })
 </script>
 <style>
   .message {
@@ -45,22 +56,19 @@
   <div class="row">
     <span class="herbier">{leaf}</span>
     {#if tag}
-    <p class="tag">{tag.name}</p>
+    <p class="tag">{tag}</p>
     {/if}
     <hr />
   </div>
   <div class="stack">
-    <p><span class="name">{name} </span>: {@html content.replace(regex, '')}</p>
+    <p><span class="name">{name} </span>: {@html content}</p>
     <!-- {#if media}
   <svelte:component this={media.component} />
   {/if} -->
     {#if (replies && replies.length)}
     <ul class="bullets stack">
       {#each replies as reply}
-      <li>
-        <span class="name">{reply.account.username} </span>: {@html
-        reply.content.replace(regex, '')}
-      </li>
+      <li><span class="name">{reply.name} </span>: {@html reply.content}</li>
       {/each}
     </ul>
     {/if}
