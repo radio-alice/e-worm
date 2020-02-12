@@ -8,9 +8,4 @@ you could use it with any pleroma backend
 
 To start a production version of your app, run `npm run build && npm start`. This will disable live reloading, and activate the appropriate bundler plugins.
 
-You can deploy your application to any environment that supports Node 8 or above. As an example, to deploy to [Now](https://zeit.co/now), run these commands:
-
-```bash
-npm install -g now
-now
-```
+[![Run on Repl.it](https://repl.it/badge/github/radio-alice/e-worm)](https://repl.it/github/radio-alice/e-worm)
