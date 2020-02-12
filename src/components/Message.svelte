@@ -13,7 +13,10 @@
     // remove links back to original frontend
     const links = document.querySelectorAll('a')
     links.forEach(link => {
-      if (link.attributes.href.value.startsWith(baseUrl))
+      if (
+        link.attributes.href &&
+        link.attributes.href.value.startsWith(baseUrl)
+      )
         link.removeAttribute('href')
     })
   })
