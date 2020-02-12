@@ -22,6 +22,7 @@ export const getPublicMessages = async fetch =>
   (await (await fetch(`${baseUrl}/api/v1/timelines/public?limit=50`)).json())
     .map(stripExcessData)
     .filter(message => message.in_reply_to_id === null)
+    .filter(message => message.tags[0])
 
 const getReplies = async (messageId, fetch) =>
   (
