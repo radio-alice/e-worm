@@ -93,7 +93,7 @@
     {#each $messages as message (message.id)}
     <Message {...message}>
       {#if user}
-      <Compose replyID="{message.id}" tag="{message.tags[0].name}"></Compose>
+      <Compose replyID="{message.id}" tag="{message.tag}"></Compose>
       {/if}
     </Message>
     {:else}
