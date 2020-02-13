@@ -75,7 +75,20 @@
   onMount(() => {
     if (window.innerWidth > 600)
       document.querySelector('#cmd').style.display = 'inline'
+
     messages.seed(initialMessages)
+
+    // remove links back to original frontend
+    const links = document.querySelectorAll('a')
+    links.forEach(link => {
+      if (link.attributes.href) {
+        if (link.attributes.href.value.startsWith(baseUrl)) {
+          link.removeAttribute('href')
+        } else if (link.hostname !== location.hostname) {
+          link.setAttribute('target', '_blank')
+        }
+      }
+    })
   })
 </script>
 <script context="module">
