@@ -8,12 +8,10 @@
     align-items: center;
     margin-bottom: calc(var(--s5) + 0.5vw);
   }
-  footer {
+  header {
     flex-direction: row;
-    position: fixed;
-    bottom: 0;
     width: 100%;
-    padding: 0 calc(5vw - var(--s-1)) var(--s-2) calc(5vw - var(--s-1));
+    padding: var(--s-2) calc(5vw - var(--s-1)) 0 calc(5vw - var(--s-1));
     background-color: var(--peri);
     box-shadow: 0 0 var(--s0) var(--s0) var(--peri);
     display: flex;
@@ -22,10 +20,10 @@
     flex-wrap: wrap;
     font-size: calc(var(--s-1) + 0.5vw);
   }
-  footer a {
+  header a {
     font-size: calc(var(--s0) + 0.5vw);
   }
-  footer * {
+  header * {
     max-width: 100%;
   }
   .misc > * {
@@ -101,20 +99,7 @@
     return { user, initialMessages }
   }
 </script>
-<div class="centerh">
-  <main class="stack main">
-    {#each $messages as message (message.id)}
-    <Message {...message}>
-      {#if user}
-      <Compose replyID="{message.id}" tag="{message.tag}"></Compose>
-      {/if}
-    </Message>
-    {:else}
-    <p>loading #content...</p>
-    {/each}
-  </main>
-</div>
-<footer class="flexi">
+<header class="flexi">
   <div class="compose">
     {#if user}
     <Compose></Compose>
@@ -129,5 +114,18 @@
     {/if}
     <p id="cmd">cmd = view shortcuts</p>
   </div>
-</footer>
+</header>
+<div class="centerh">
+  <main class="stack main">
+    {#each $messages as message (message.id)}
+    <Message {...message}>
+      {#if user}
+      <Compose replyID="{message.id}" tag="{message.tag}"></Compose>
+      {/if}
+    </Message>
+    {:else}
+    <p>loading #content...</p>
+    {/each}
+  </main>
+</div>
 <Shortcuts visible="{shortcutsActive}"></Shortcuts>
