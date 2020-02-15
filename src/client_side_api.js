@@ -1,25 +1,33 @@
 import { baseUrl } from './constants.js'
 
-export const getInitialMessages = async fetch =>
+export const getInitialMessages = fetch =>
+  getMessagesAndReplies(`${baseUrl}/api/v1/timelines/public?limit=50`, fetch)
+
+export const getMessagesOlderThanId = (id, fetch) =>
+  getMessagesAndReplies(
+    `${baseUrl}/api/v1/timelines/public?limit=50&max_id=${id}`,
+    fetch
+  )
+
+const getMessagesAndReplies = async (url, fetch) =>
   await Promise.all(
-    (await getPublicMessages(fetch)).map(async message => ({
+    (await getMessages(url, fetch)).map(async message => ({
       ...message,
       replies: await getReplies(message.id, fetch)
     }))
   )
 
-export async function getPrivateMessages(accessToken, fetch) {
-  return await (
+const getPrivateMessages = async (accessToken, fetch) =>
+  await (
     await fetch(`${baseUrl}/api/v1/timelines/home`, {
       headers: {
         Authorization: `Bearer ${accessToken}`
       }
     })
   ).json()
-}
 
-export const getPublicMessages = async fetch =>
-  (await (await fetch(`${baseUrl}/api/v1/timelines/public?limit=50`)).json())
+const getMessages = async (url, fetch) =>
+  (await (await fetch(url)).json())
     .map(stripExcessData)
     .filter(message => message.in_reply_to_id === null)
     .filter(message => message.tag)
