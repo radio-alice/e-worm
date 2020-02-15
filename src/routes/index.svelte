@@ -8,6 +8,7 @@
   import Message from '../components/Message.svelte'
   import Compose from '../components/Compose.svelte'
   import { messages } from './_messages'
+  import { startDate } from '../constants'
 
   export let user
   export let initialMessages
@@ -21,8 +22,11 @@
   const handleKeyUp = e => {
     if (isCtrlKey(e)) shortcutsActive = false
   }
-  function loadMore() {
-    messages.loadMore($messages[$messages.length - 1].id)
+
+  $: lastMessage = $messages[$messages.length - 1]
+  async function loadMore() {
+    await messages.loadMore(lastMessage.id)
+    loadedAllMessages = new Date(lastMessage.created_at) <= startDate
   }
   onMount(() => {
     messages.seed(initialMessages)
