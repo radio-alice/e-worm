@@ -6,7 +6,6 @@
     width: 100%;
     margin: var(--s0);
     align-items: center;
-    margin-bottom: calc(var(--s5) + 0.5vw);
   }
   header {
     flex-direction: row;
@@ -49,6 +48,9 @@
   }
   #ctrl {
     display: none;
+  }
+  .load-more {
+    margin: var(--s1) 0;
   }
 </style>
 <svelte:window on:keydown="{handleKeyDown}" on:keyup="{handleKeyUp}" />
@@ -126,6 +128,7 @@
     {:else}
     <p>loading #content...</p>
     {/each}
+    <button class="load-more">load more</button>
   </main>
 </div>
 <Shortcuts visible="{shortcutsActive}"></Shortcuts>

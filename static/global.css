@@ -108,3 +108,18 @@ a:visited {
 .herbier {
   font-family: 'herbier';
 }
+button,
+input[type='submit'] {
+  cursor: pointer;
+  font-family: 'CSTM';
+  flex: 1;
+  background-color: var(--gold);
+  font-size: var(--s1);
+  box-shadow: 0 0 var(--s0) var(--s-1) var(--gold);
+}
+button:disabled,
+input[type='submit']:disabled {
+  cursor: default;
+  background-color: var(--peri);
+  box-shadow: 0 0 var(--s0) var(--s0) var(--peri);
+}

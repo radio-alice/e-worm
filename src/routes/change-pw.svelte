@@ -35,18 +35,7 @@
     margin-top: var(--s1);
   }
   input[type='submit'] {
-    cursor: pointer;
-    margin: var(--s3) var(--s0);
-    font-family: 'CSTM';
-    flex: 1;
-    background-color: var(--gold);
-    font-size: var(--s1);
-    box-shadow: 0 0 var(--s0) var(--s-1) var(--gold);
-  }
-  input[type='submit']:disabled {
-    cursor: default;
-    background-color: var(--peri);
-    box-shadow: 0 0 var(--s0) var(--s0) var(--peri);
+    margin: var(--s3) var(--s1);
   }
   input[type='password'] {
     flex: 5;
