@@ -1,7 +1,7 @@
 <script>
   import { stores, goto } from '@sapper/app'
   import { changePassword } from '../client_side_api'
-  import { toast, triggerToast } from '../components/toast.js'
+  import { toast } from '../components/toast.js'
   import Toast from '../components/Toast.svelte'
 
   const { session } = stores()
@@ -10,17 +10,23 @@
 
   const handleSubmit = async () => {
     if (!accessToken) {
-      triggerToast('you were never logged in!', true)
+      toast.trigger('you were never logged in!', true)
       setTimeout(() => {
         goto('/login')
       }, 2000)
     } else {
       const response = await changePassword(oldPW, newPW, accessToken)
       if (response.error) {
-        triggerToast(`error: ${response.error}`, true)
+        toast.trigger(`error: ${response.error}`, true)
         return
       }
-      goto('/logout')
+      toast.trigger(
+        "password successfully changed– you'll have to log in again",
+        false
+      )
+      setTimeout(() => {
+        goto('/logout')
+      }, 2000)
     }
   }
 </script>
@@ -29,6 +35,7 @@
     margin-top: var(--s1);
   }
   input[type='submit'] {
+    cursor: pointer;
     margin: var(--s3) var(--s0);
     font-family: 'CSTM';
     flex: 1;
@@ -37,6 +44,7 @@
     box-shadow: 0 0 var(--s0) var(--s-1) var(--gold);
   }
   input[type='submit']:disabled {
+    cursor: default;
     background-color: var(--peri);
     box-shadow: 0 0 var(--s0) var(--s0) var(--peri);
   }
