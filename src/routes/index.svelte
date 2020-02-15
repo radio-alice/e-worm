@@ -1,6 +1,58 @@
 <svelte:head>
   <title>e-worm club</title>
 </svelte:head>
+<svelte:window on:keydown="{handleKeyDown}" on:keyup="{handleKeyUp}" />
+<script>
+  import { onMount } from 'svelte'
+  import Shortcuts from '../components/Shortcuts.svelte'
+  import Message from '../components/Message.svelte'
+  import Compose from '../components/Compose.svelte'
+  import { messages } from './_messages'
+
+  export let user
+  export let initialMessages
+  let shortcutsActive = false
+  let loadedAllMessages = false
+
+  const isCtrlKey = e => e.key === 'Control'
+  const handleKeyDown = e => {
+    if (isCtrlKey(e)) shortcutsActive = true
+  }
+  const handleKeyUp = e => {
+    if (isCtrlKey(e)) shortcutsActive = false
+  }
+  function loadMore() {
+    messages.loadMore($messages[$messages.length - 1].id)
+  }
+  onMount(() => {
+    messages.seed(initialMessages)
+
+    if (window.innerWidth > 600)
+      document.querySelector('#ctrl').style.display = 'inline'
+
+    // remove links back to original frontend + target="_blank" others
+    const links = document.querySelectorAll('a')
+    links.forEach(link => {
+      if (link.attributes.href) {
+        if (link.attributes.href.value.startsWith(baseUrl)) {
+          link.removeAttribute('href')
+        } else if (link.hostname !== location.hostname) {
+          link.setAttribute('target', '_blank')
+        }
+      }
+    })
+  })
+</script>
+<script context="module">
+  import { baseUrl } from '../constants'
+  import { getInitialMessages } from '../client_side_api'
+
+  export async function preload(page, { token }) {
+    const user = token ? true : false
+    const initialMessages = await getInitialMessages(this.fetch)
+    return { user, initialMessages }
+  }
+</script>
 <style>
   .main {
     width: 100%;
@@ -52,55 +104,10 @@
   .load-more {
     margin: var(--s1) 0;
   }
+  .load-more.loadedAllMessages {
+    display: none;
+  }
 </style>
-<svelte:window on:keydown="{handleKeyDown}" on:keyup="{handleKeyUp}" />
-<script>
-  import { onMount } from 'svelte'
-  import Shortcuts from '../components/Shortcuts.svelte'
-  import Message from '../components/Message.svelte'
-  import Compose from '../components/Compose.svelte'
-  import { messages } from './_messages'
-
-  export let user
-  export let initialMessages
-  let shortcutsActive = false
-
-  const isCtrlKey = e => e.key === 'Control'
-  const handleKeyDown = e => {
-    if (isCtrlKey(e)) shortcutsActive = true
-  }
-  const handleKeyUp = e => {
-    if (isCtrlKey(e)) shortcutsActive = false
-  }
-  onMount(() => {
-    messages.seed(initialMessages)
-
-    if (window.innerWidth > 600)
-      document.querySelector('#ctrl').style.display = 'inline'
-
-    // remove links back to original frontend + target="_blank" others
-    const links = document.querySelectorAll('a')
-    links.forEach(link => {
-      if (link.attributes.href) {
-        if (link.attributes.href.value.startsWith(baseUrl)) {
-          link.removeAttribute('href')
-        } else if (link.hostname !== location.hostname) {
-          link.setAttribute('target', '_blank')
-        }
-      }
-    })
-  })
-</script>
-<script context="module">
-  import { baseUrl } from '../constants'
-  import { getInitialMessages } from '../client_side_api'
-
-  export async function preload(page, { token }) {
-    const user = token ? true : false
-    const initialMessages = await getInitialMessages(this.fetch)
-    return { user, initialMessages }
-  }
-</script>
 <header class="flexi">
   <div class="compose">
     {#if user}
@@ -128,7 +135,9 @@
     {:else}
     <p>loading #content...</p>
     {/each}
-    <button class="load-more">load more</button>
+    <button class="load-more" on:click="{loadMore}" class:loadedAllMessages>
+      load more
+    </button>
   </main>
 </div>
 <Shortcuts visible="{shortcutsActive}"></Shortcuts>
