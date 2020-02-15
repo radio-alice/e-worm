@@ -47,7 +47,7 @@
     display: flex;
     justify-content: center;
   }
-  #cmd {
+  #ctrl {
     display: none;
   }
 </style>
@@ -63,20 +63,20 @@
   export let initialMessages
   let shortcutsActive = false
 
-  const isCmdKey = e => e.keyCode === 224
+  const isCtrlKey = e => e.key === 'Control'
   const handleKeyDown = e => {
-    if (isCmdKey(e)) shortcutsActive = true
+    if (isCtrlKey(e)) shortcutsActive = true
   }
   const handleKeyUp = e => {
-    if (isCmdKey(e)) shortcutsActive = false
+    if (isCtrlKey(e)) shortcutsActive = false
   }
   onMount(() => {
-    if (window.innerWidth > 600)
-      document.querySelector('#cmd').style.display = 'inline'
-
     messages.seed(initialMessages)
 
-    // remove links back to original frontend
+    if (window.innerWidth > 600)
+      document.querySelector('#ctrl').style.display = 'inline'
+
+    // remove links back to original frontend + target="_blank" others
     const links = document.querySelectorAll('a')
     links.forEach(link => {
       if (link.attributes.href) {
@@ -112,7 +112,7 @@
     <a href="/logout">logout</a>
     <a href="/change-pw">change password</a>
     {/if}
-    <p id="cmd">cmd = view shortcuts</p>
+    <p id="ctrl">ctrl = view shortcuts</p>
   </div>
 </header>
 <div class="centerh">
