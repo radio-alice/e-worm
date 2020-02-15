@@ -81,7 +81,7 @@
   header * {
     max-width: 100%;
   }
-  .misc > * {
+  .misc > * + * {
     margin-top: var(--s-1);
   }
   .misc > * + * {

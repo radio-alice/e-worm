@@ -79,6 +79,7 @@
     font-family: 'CSTM';
     flex: 1;
     background-color: var(--gold);
+    box-shadow: none;
   }
   .main {
     margin-top: 0;
