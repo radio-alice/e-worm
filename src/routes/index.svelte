@@ -33,18 +33,6 @@
 
     if (window.innerWidth > 600)
       document.querySelector('#ctrl').style.display = 'inline'
-
-    // remove links back to original frontend + target="_blank" others
-    const links = document.querySelectorAll('a')
-    links.forEach(link => {
-      if (link.attributes.href) {
-        if (link.attributes.href.value.startsWith(baseUrl)) {
-          link.removeAttribute('href')
-        } else if (link.hostname !== location.hostname) {
-          link.setAttribute('target', '_blank')
-        }
-      }
-    })
   })
 </script>
 <script context="module">

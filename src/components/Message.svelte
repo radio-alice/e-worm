@@ -1,13 +1,39 @@
 <script>
   import { onMount } from 'svelte'
   import { baseUrl } from '../constants'
-  export let content, tag, replies, name
+  export let content,
+    tag,
+    name,
+    replies = []
 
   let leaf = Math.ceil(Math.random() * 10)
   if (leaf === 10) leaf = 'q'
 
   const focus = ({ target }) =>
     target.scrollIntoView({ behavior: 'smooth', block: 'center' })
+
+  // remove links back to original frontend + target="_blank" others
+  const domParser = new DOMParser()
+  const scrubLinks = content => {
+    const parsedContent = domParser.parseFromString(content, 'text/html')
+    const links = parsedContent.querySelectorAll('a')
+    links.forEach(link => {
+      if (link.attributes.href) {
+        if (link.attributes.href.value.startsWith(baseUrl)) {
+          link.removeAttribute('href')
+        } else if (link.hostname !== location.hostname) {
+          link.setAttribute('target', '_blank')
+        }
+      }
+    })
+    return parsedContent.activeElement.innerHTML
+  }
+
+  const scrubbedReplies = replies.map(message => ({
+    ...message,
+    content: scrubLinks(message.content)
+  }))
+  const scrubbedContent = scrubLinks(content)
 </script>
 <style>
   .message {
@@ -52,13 +78,13 @@
     <hr />
   </div>
   <div class="stack">
-    <p><span class="name">{name} </span>: {@html content}</p>
+    <p><span class="name">{name} </span>: {@html scrubbedContent}</p>
     <!-- {#if media}
   <svelte:component this={media.component} />
   {/if} -->
     {#if (replies && replies.length)}
     <ul class="bullets stack">
-      {#each replies as reply}
+      {#each scrubbedReplies as reply}
       <li><span class="name">{reply.name} </span>: {@html reply.content}</li>
       {/each}
     </ul>
