@@ -21,14 +21,24 @@
     font-size: var(--s1);
   }
   .key {
-    background-color: var(--transpink);
+    background-color: var(--pink);
     padding: var(--s0);
+  }
+  .value {
+    background-color: var(--peri);
+    padding: var(--s-1);
   }
   div {
     display: none;
   }
 </style>
 <div class="stack" class:visible>
-  <p><span class="key">Tab / Shift + Tab</span> - navigate through feed</p>
-  <p><span class="key">Cmd + ⮐</span> - send finished post / reply</p>
+  <p>
+    <span class="key">Tab / Shift + Tab</span> -
+    <span class="value">navigate through feed</span>
+  </p>
+  <p>
+    <span class="key">Cmd + ⮐</span> -
+    <span class="value">send finished post / reply</span>
+  </p>
 </div>
