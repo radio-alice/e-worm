@@ -3,18 +3,20 @@
   import { sendMessage } from '../client_side_api'
   import { stores } from '@sapper/app'
   const { session } = stores()
-
   export let replyID = false
   export let tag = tagOptions[0]
   let access_token
   let content = ''
+  let jsEnabled = false
   session.subscribe(({ token }) => (access_token = token.access_token))
 
-  const handleAddPost = async () => {
+  async function handleAddPost() {
     if (content) await sendMessage(content, tag, replyID, access_token)
     content = ''
     location.reload()
   }
+
+  function resizeCompose(e) {}
 
   const isCmdEnter = e => e.keyCode == 13 && e.metaKey
 </script>
@@ -23,29 +25,47 @@
     width: 100%;
     margin-bottom: 0;
   }
-  textarea {
+  .expandingArea {
+    position: relative;
     flex: 5;
-    font-size: var(--s0);
-    border: none;
-    text-shadow: 0 0 var(--s-5) var(--peri);
     max-width: 80%;
   }
-  textarea:focus {
+  .expandingArea > pre,
+  textarea {
     outline: var(--gold);
+    font-size: var(--s0);
+    text-shadow: 0 0 var(--s-thin) var(--peri);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  .expandingArea textarea {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+  }
+  .expandingArea.active > textarea {
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    resize: none;
+  }
+  .expandingArea > pre {
+    display: none;
+  }
+  .expandingArea.active > pre {
+    display: block;
+    /* Hide the text; just using it for sizing */
+    visibility: hidden;
   }
   .reply {
-    height: var(--s1);
     box-shadow: 0 var(--s-thin) var(--s-1) var(--gold);
   }
-  .reply textarea {
-    font-size: var(--s-1);
-  }
-  .reply input[type='submit'] {
-    font-size: var(--s0);
-    padding: 0;
-  }
   .row {
-    align-items: stretch;
     width: 100%;
   }
   option,
@@ -83,9 +103,7 @@
   }
   .main {
     margin-top: 0;
-  }
-  .main input[type='submit'] {
-    font-size: var(--s1);
+    min-height: var(--s3);
   }
 </style>
 <form
@@ -103,11 +121,15 @@
   </div>
   {/if}
   <div class="row {replyID ? 'reply' : 'main'}">
-    <textarea
-      bind:value="{content}"
-      placeholder="give us your sweet thoughts..."
-      rows="{replyID ? '1' : '2'}"
-    ></textarea>
+    <div class="expandingArea active">
+      <pre><span>{content}</span><br /></pre>
+      <textarea
+        bind:value="{content}"
+        on:input="{resizeCompose}"
+        placeholder="give us your sweet thoughts..."
+        rows="{replyID ? '1' : '2'}"
+      ></textarea>
+    </div>
     <input type="submit" disabled="{!(content)}" value="⇈" />
   </div>
 </form>
