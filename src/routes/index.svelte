@@ -60,8 +60,9 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    flex-wrap: wrap;
+    flex-wrap: wrap-reverse;
     font-size: calc(var(--s-1) + 0.5vw);
+    margin-bottom: var(--s1);
   }
   header a {
     font-size: calc(var(--s0) + 0.5vw);
@@ -78,15 +79,11 @@
   .misc {
     flex-basis: 15rem;
     flex-grow: 1;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    max-width: max-content;
+    text-align: right;
   }
   .compose {
     flex-grow: 999;
-    flex-basis: 0;
+    flex-basis: 15rem;
     display: flex;
     justify-content: center;
   }
@@ -100,7 +97,7 @@
     display: none;
   }
 </style>
-<header class="flexi">
+<header>
   <div class="compose">
     {#if user}
     <Compose></Compose>
@@ -108,12 +105,14 @@
     <a href="/login">login</a>
     {/if}
   </div>
-  <div class="misc">
-    {#if user}
-    <a href="/logout">logout</a>
-    <a href="/change-pw">change password</a>
-    {/if}
-    <p id="ctrl">ctrl = view shortcuts</p>
+  <div class="misc cluster">
+    <div>
+      {#if user}
+      <a href="/logout">logout</a>
+      <a href="/change-pw">change password</a>
+      {/if}
+      <p id="ctrl">ctrl = view shortcuts</p>
+    </div>
   </div>
 </header>
 <div class="centerh">

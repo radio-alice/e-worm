@@ -42,16 +42,20 @@
   --s5: calc(var(--s4) * var(--ratio));
   --text-width: 60ch;
   --bullet: '↝';
-  font-size: var(--s0);
+}
+html {
+  font-size: 16px;
 }
 * {
   font-family: 'Bagnard', monospace;
+  font-size: var(--s0);
   color: var(--darkblue);
   border: none;
   max-width: var(--text-width);
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  outline: 0;
 }
 html,
 body,
@@ -122,4 +126,18 @@ input[type='submit']:disabled {
   cursor: default;
   background-color: var(--peri);
   box-shadow: 0 0 var(--s0) var(--s0) var(--peri);
+}
+.cluster {
+  --space: var(--s0);
+  overflow: hidden;
+}
+.cluster > * {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  margin: calc(var(--space) / 2 * -1);
+}
+.cluster > * > * {
+  margin: calc(var(--space) / 2);
 }
