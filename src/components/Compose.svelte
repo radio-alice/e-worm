@@ -98,8 +98,10 @@
   input[type='submit'] {
     font-family: 'CSTM';
     flex: 1;
-    background-color: var(--gold);
     box-shadow: none;
+  }
+  .main input[type='submit']:disabled {
+    border: dotted var(--darkblue) var(--s-5);
   }
   .main {
     margin-top: 0;
