@@ -11,8 +11,9 @@
   session.subscribe(({ token }) => (access_token = token.access_token))
 
   async function handleAddPost() {
-    if (content) await sendMessage(content, tag, replyID, access_token)
+    const message = content
     content = ''
+    if (message) await sendMessage(message, tag, replyID, access_token)
     location.reload()
   }
 
