@@ -1,11 +1,14 @@
 import { baseUrl } from './constants.js'
-
+const numberToFetch = 100
 export const getInitialMessages = fetch =>
-  getMessagesAndReplies(`${baseUrl}/api/v1/timelines/public?limit=50`, fetch)
+  getMessagesAndReplies(
+    `${baseUrl}/api/v1/timelines/public?limit=${numberToFetch}`,
+    fetch
+  )
 
 export const getMessagesOlderThanId = (id, fetch) =>
   getMessagesAndReplies(
-    `${baseUrl}/api/v1/timelines/public?limit=50&max_id=${id}`,
+    `${baseUrl}/api/v1/timelines/public?limit=${numberToFetch}&max_id=${id}`,
     fetch
   )
 
