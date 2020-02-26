@@ -10,14 +10,17 @@
   let jsEnabled = false
   session.subscribe(({ token }) => (access_token = token.access_token))
 
+  $: disableSend = !(content && content.length <= 500)
+  $: contentTooLong = content.length > 500
+
   async function handleAddPost() {
     const message = content
     content = ''
-    if (message) await sendMessage(message, tag, replyID, access_token)
-    location.reload()
+    if (message) {
+      await sendMessage(message, tag, replyID, access_token)
+      location.reload()
+    }
   }
-
-  function resizeCompose(e) {}
 
   const isCmdEnter = e => e.keyCode == 13 && e.metaKey
 </script>
@@ -30,6 +33,17 @@
     position: relative;
     flex: 5;
     max-width: 80%;
+  }
+  .contentTooLong::before {
+    content: 'hoo boy I can only handle 500 characters at a time now';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: var(--pink);
+    z-index: 10;
+    font-style: italic;
+    padding: var(--s0);
   }
   .expandingArea > pre,
   textarea {
@@ -124,15 +138,14 @@
   </div>
   {/if}
   <div class="row {replyID ? 'reply' : 'main'}">
-    <div class="expandingArea active">
+    <div class="expandingArea active" class:contentTooLong>
       <pre><span>{content}</span><br /></pre>
       <textarea
         bind:value="{content}"
-        on:input="{resizeCompose}"
         placeholder="give us your sweet thoughts..."
         rows="{replyID ? '1' : '2'}"
       ></textarea>
     </div>
-    <input type="submit" disabled="{!(content)}" value="⇈" />
+    <input type="submit" disabled="{disableSend}" value="⇈" />
   </div>
 </form>
