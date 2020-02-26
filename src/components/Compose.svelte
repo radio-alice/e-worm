@@ -1,10 +1,9 @@
 <script>
-  import { tagOptions } from '../constants'
   import { sendMessage } from '../client_side_api'
   import { stores } from '@sapper/app'
   const { session } = stores()
   export let replyID = false
-  export let tag = tagOptions[0]
+  export let tag = ''
   let access_token
   let content = ''
   let jsEnabled = false
@@ -15,6 +14,7 @@
 
   async function handleAddPost() {
     const message = content
+    tag = tag || 'untitled'
     content = ''
     if (message) {
       await sendMessage(message, tag, replyID, access_token)
@@ -30,9 +30,9 @@
     margin-bottom: 0;
   }
   .expandingArea {
-    position: relative;
     flex: 5;
     max-width: 80%;
+    position: relative;
   }
   .contentTooLong::before {
     content: 'hoo boy I can only handle 500 characters at a time now';
@@ -83,32 +83,13 @@
   .row {
     width: 100%;
   }
-  option,
-  select {
+  .tag {
     font-family: 'Autopia Bold', 'Bagnard';
     text-shadow: 0 0 var(--s-4) var(--gold);
-    font-size: var(--s-1);
     text-align: center;
-    background-color: var(--transparent);
-  }
-  select {
-    display: block;
-    width: 100%;
-    -webkit-appearance: none;
-    appearance: none;
-    flex: 12;
-  }
-  .select-wrapper {
     background-color: var(--transcream);
-    border-bottom: var(--s-5) solid var(--peri);
-  }
-  .select-wrapper::after {
-    content: '▼';
-    flex: 0;
-    position: relative;
-    right: var(--s-1);
-    pointer-events: none;
-    align-items: center;
+    max-width: 80%;
+    margin-bottom: var(--s-3);
   }
   input[type='submit'] {
     font-family: 'CSTM';
@@ -120,6 +101,9 @@
   }
   .main {
     margin-top: 0;
+    height: min-content;
+  }
+  .main .expandingArea {
     min-height: var(--s3);
   }
 </style>
@@ -129,13 +113,12 @@
   on:keydown="{e => isCmdEnter(e) ? handleAddPost() : null}"
 >
   {#if !replyID}
-  <div class="select-wrapper row">
-    <select bind:value="{tag}">
-      {#each tagOptions as tagOption}
-      <option value="{tagOption}">{tagOption}</option>
-      {/each}
-    </select>
-  </div>
+  <input
+    class="tag"
+    type="text"
+    bind:value="{tag}"
+    placeholder="subject (e.g. music, Pete, etc.)"
+  />
   {/if}
   <div class="row {replyID ? 'reply' : 'main'}">
     <div class="expandingArea active" class:contentTooLong>
@@ -143,7 +126,6 @@
       <textarea
         bind:value="{content}"
         placeholder="give us your sweet thoughts..."
-        rows="{replyID ? '1' : '2'}"
       ></textarea>
     </div>
     <input type="submit" disabled="{disableSend}" value="⇈" />
