@@ -9,9 +9,11 @@
   import Compose from '../components/Compose.svelte'
   import { messages } from './_messages'
   import { startDate } from '../constants'
+  import { getMessagesStream } from '../client_side_api'
 
   export let user
   export let initialMessages
+  export let access_token
   let shortcutsActive = false
   let loadedAllMessages = false
 
@@ -30,6 +32,20 @@
   }
   onMount(() => {
     messages.seed(initialMessages)
+    if (access_token) {
+      const messagesStream = getMessagesStream(access_token)
+      messagesStream.onmessage = message => {
+        if (!message.data) return
+        const data = JSON.parse(message.data)
+        if (data.event !== 'update') return
+        const payload = JSON.parse(data.payload)
+        if (payload.in_reply_to_id === null) {
+          messages.addOne(payload)
+        } else {
+          messages.addReply(payload.in_reply_to_id, payload)
+        }
+      }
+    }
 
     if (window.innerWidth > 600)
       document.querySelector('#ctrl').style.display = 'inline'
@@ -42,7 +58,7 @@
   export async function preload(page, { token }) {
     const user = token ? true : false
     const initialMessages = await getInitialMessages(this.fetch)
-    return { user, initialMessages }
+    return { user, initialMessages, access_token: token.access_token }
   }
 </script>
 <style>

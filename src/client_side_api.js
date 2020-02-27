@@ -1,5 +1,11 @@
-import { baseUrl } from './constants.js'
+import { baseUrl, wsUrl } from './constants.js'
 const numberToFetch = 100
+
+export const getMessagesStream = accessToken =>
+  new WebSocket(
+    `${wsUrl}/api/v1/streaming?access_token=${accessToken}&stream=public`
+  )
+
 export const getInitialMessages = fetch =>
   getMessagesAndReplies(
     `${baseUrl}/api/v1/timelines/public?limit=${numberToFetch}`,
@@ -20,15 +26,6 @@ const getMessagesAndReplies = async (url, fetch) =>
     }))
   )
 
-const getPrivateMessages = async (accessToken, fetch) =>
-  await (
-    await fetch(`${baseUrl}/api/v1/timelines/home`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`
-      }
-    })
-  ).json()
-
 const getMessages = async (url, fetch) =>
   (await (await fetch(url)).json())
     .map(stripExcessData)
@@ -42,7 +39,7 @@ const getReplies = async (messageId, fetch) =>
     ).json()
   ).descendants.map(stripExcessData)
 
-const stripExcessData = message => ({
+export const stripExcessData = message => ({
   id: message.id,
   created_at: message.created_at,
   in_reply_to_id: message.in_reply_to_id,

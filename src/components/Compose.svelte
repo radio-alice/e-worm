@@ -18,7 +18,6 @@
     content = ''
     if (message) {
       await sendMessage(message, tag, replyID, access_token)
-      location.reload()
     }
   }
 
